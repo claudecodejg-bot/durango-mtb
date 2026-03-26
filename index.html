@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Durango MTB | Mountain Biking Trail Guide</title>
+  <meta name="description" content="Discover 300+ miles of world-class mountain biking trails within 25 miles of Durango, Colorado. Interactive map, trail ratings, and local tips.">
+  <meta property="og:title" content="Durango MTB | Mountain Biking Trail Guide">
+  <meta property="og:description" content="Discover 300+ miles of world-class mountain biking trails within 25 miles of Durango, Colorado.">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:wght@300;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin="">
+
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1f6b5;</text></svg>">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">Durango <span>MTB</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#map-section">Map</a></li>
+      <li><a href="#trails">Trails</a></li>
+      <li><a href="#featured">Featured</a></li>
+      <li><a href="#tips">Tips</a></li>
+      <li><a href="#improvements">Roadmap</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Hero -->
+  <header id="hero">
+    <div class="hero-content">
+      <h1>DURANGO<br><span class="accent">MTB</span></h1>
+      <p class="tagline">300+ Miles of World-Class Singletrack</p>
+      <span class="hero-badge">Within 25 Miles of Downtown</span>
+    </div>
+    <div class="mountain-layer mountain-layer-1"></div>
+    <div class="mountain-layer mountain-layer-2"></div>
+    <div class="mountain-layer mountain-layer-3"></div>
+    <div class="scroll-indicator">
+      <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </div>
+  </header>
+
+  <!-- Stats Bar -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item reveal">
+        <div class="stat-number"><span class="counter" data-target="300">0</span><span class="stat-suffix">+</span></div>
+        <div class="stat-label">Miles of Trail</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number"><span class="counter" data-target="16">0</span></div>
+        <div class="stat-label">Trail Systems</div>
+      </div>
+      <div class="stat-item reveal">
+        <div class="stat-number"><span class="counter" data-target="25">0</span><span class="stat-suffix"> mi</span></div>
+        <div class="stat-label">Radius from Town</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map-section">
+    <div class="section-container">
+      <h2 class="reveal">Explore the Trails</h2>
+      <p class="section-subtitle reveal">Interactive map of every trail system within 25 miles of Durango. Click a marker for details.</p>
+      <div id="map" class="reveal"></div>
+    </div>
+  </section>
+
+  <!-- Trail Cards -->
+  <section id="trails">
+    <div class="section-container">
+      <h2 class="reveal">Trail Systems</h2>
+      <p class="section-subtitle reveal">Filter by difficulty or location to find your perfect ride.</p>
+      <div id="filters" class="reveal">
+        <div class="filter-group">
+          <span class="filter-label">Difficulty</span>
+          <button class="filter-btn active" data-filter="difficulty" data-value="all">All</button>
+          <button class="filter-btn" data-filter="difficulty" data-value="novice">&#9679; Novice</button>
+          <button class="filter-btn" data-filter="difficulty" data-value="intermediate">&#9632; Intermediate</button>
+          <button class="filter-btn" data-filter="difficulty" data-value="advanced">&#9670; Advanced</button>
+          <button class="filter-btn" data-filter="difficulty" data-value="expert">&#9670;&#9670; Expert</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Location</span>
+          <button class="filter-btn active" data-filter="category" data-value="all">All</button>
+          <button class="filter-btn" data-filter="category" data-value="in-town">In-Town</button>
+          <button class="filter-btn" data-filter="category" data-value="mid-country">Mid-Country</button>
+          <button class="filter-btn" data-filter="category" data-value="high-country">High Country</button>
+        </div>
+      </div>
+      <div id="trail-grid"></div>
+    </div>
+  </section>
+
+  <!-- Featured Rides -->
+  <section id="featured">
+    <div class="section-container">
+      <h2 class="reveal">Featured Rides</h2>
+      <p class="section-subtitle reveal">Curated picks for every type of rider.</p>
+      <div class="featured-grid">
+        <div class="featured-card featured-beginner reveal" data-trail="three-springs">
+          <div class="featured-card-content">
+            <span class="featured-label">Best Beginner</span>
+            <h3>Three Springs / Spur Line</h3>
+            <p>Flowing loops with self-educating terrain. The perfect place to start your Durango MTB journey.</p>
+          </div>
+        </div>
+        <div class="featured-card featured-flow reveal" data-trail="twin-buttes">
+          <div class="featured-card-content">
+            <span class="featured-label">Best Flow</span>
+            <h3>Twin Buttes</h3>
+            <p>Ed & Flo descents are pure singletrack bliss. Ride counterclockwise and let gravity do the work.</p>
+          </div>
+        </div>
+        <div class="featured-card featured-epic reveal" data-trail="engineer">
+          <div class="featured-card-content">
+            <span class="featured-label">Best Epic</span>
+            <h3>Engineer Mountain</h3>
+            <p>4,000 feet of descent over 10 miles from Coal Bank Pass. The ultimate Durango bucket-list ride.</p>
+          </div>
+        </div>
+        <div class="featured-card featured-views reveal" data-trail="ct-25">
+          <div class="featured-card-content">
+            <span class="featured-label">Best Views</span>
+            <h3>Colorado Trail: Section 25</h3>
+            <p>Alpine wildflower panoramas and 13,000-foot peak views on iconic Colorado Trail singletrack.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trail Tips -->
+  <section id="tips">
+    <div class="section-container">
+      <h2 class="reveal">Local Trail Tips</h2>
+      <p class="section-subtitle reveal">Essential knowledge for riding in Durango.</p>
+      <div class="tips-grid">
+        <div class="tip-card reveal">
+          <span class="tip-icon">&#x1F327;&#xFE0F;</span>
+          <h3>Don't Ride When Wet</h3>
+          <p>Durango's clay-rich soil is extremely fragile when wet. Riding on muddy trails causes lasting damage to the tread. Check trail conditions before heading out.</p>
+        </div>
+        <div class="tip-card reveal">
+          <span class="tip-icon">&#x1F6E1;&#xFE0F;</span>
+          <h3>Get a CORSAR Card</h3>
+          <p>The Colorado Outdoor Recreation Search and Rescue (CORSAR) card helps fund rescue operations. A small purchase that could save your life in the backcountry.</p>
+        </div>
+        <div class="tip-card reveal">
+          <span class="tip-icon">&#x1F98C;</span>
+          <h3>Seasonal Closures</h3>
+          <p>Animas Mountain and Dalla Mountain Park close seasonally for wildlife protection. Check for additional falcon nesting closures before riding.</p>
+        </div>
+        <div class="tip-card reveal">
+          <span class="tip-icon">&#x21C6;</span>
+          <h3>Two-Way Traffic</h3>
+          <p>Most Durango trails are multi-directional. Ride in control, call out when passing, and yield to uphill riders and hikers.</p>
+        </div>
+        <div class="tip-card reveal">
+          <span class="tip-icon">&#x26A1;</span>
+          <h3>Start Early at Altitude</h3>
+          <p>High-country trails like Engineer and Colorado Trail sections are best ridden in the morning. Afternoon thunderstorms are common above treeline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Suggested Improvements -->
+  <section id="improvements">
+    <div class="section-container">
+      <h2 class="reveal">Roadmap & Improvements</h2>
+      <p class="section-subtitle reveal">Ideas to make this site even better.</p>
+      <div class="improvements-list">
+        <div class="improvement-card reveal">
+          <div class="imp-number">01</div>
+          <h3>Trail Conditions Integration</h3>
+          <p>Live trail condition status pulled from durangotrails.org so you always know what's rideable.</p>
+          <span class="imp-tag easy">Quick Win</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">02</div>
+          <h3>Seasonal Riding Calendar</h3>
+          <p>Visual matrix showing the best months to ride each trail system based on snow, mud, and weather patterns.</p>
+          <span class="imp-tag easy">Quick Win</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">03</div>
+          <h3>Elevation Profiles</h3>
+          <p>Interactive elevation charts for marquee trails showing climb and descent over distance.</p>
+          <span class="imp-tag medium">Medium Effort</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">04</div>
+          <h3>Dark / Light Mode Toggle</h3>
+          <p>Switch between the current dark theme and a light outdoor theme for daytime readability.</p>
+          <span class="imp-tag easy">Quick Win</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">05</div>
+          <h3>Offline PWA Support</h3>
+          <p>Service worker caching so trail info works offline on the trail where cell signal is spotty.</p>
+          <span class="imp-tag medium">Medium Effort</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">06</div>
+          <h3>Weather Widget</h3>
+          <p>Current Durango weather and 3-day forecast via the free Open-Meteo API. No API key needed.</p>
+          <span class="imp-tag medium">Medium Effort</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">07</div>
+          <h3>"Build Your Ride" Planner</h3>
+          <p>Select multiple trail systems and see combined stats: total miles, elevation, estimated time.</p>
+          <span class="imp-tag hard">Major Feature</span>
+        </div>
+        <div class="improvement-card reveal">
+          <div class="imp-number">08</div>
+          <h3>Community Reviews</h3>
+          <p>User trail ratings and reviews powered by GitHub Discussions. Zero backend needed.</p>
+          <span class="imp-tag medium">Medium Effort</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <h3>Durango MTB</h3>
+        <p>Your guide to the best mountain biking trails within 25 miles of Durango, Colorado. From beginner-friendly loops to epic alpine descents, Durango has world-class riding for every skill level.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Trail Resources</h4>
+        <ul>
+          <li><a href="https://www.durangotrails.org" target="_blank" rel="noopener">Durango Trails</a></li>
+          <li><a href="https://www.trailforks.com/region/durango/" target="_blank" rel="noopener">Trailforks</a></li>
+          <li><a href="https://www.mtbproject.com/directory/8007522/durango" target="_blank" rel="noopener">MTB Project</a></li>
+          <li><a href="https://www.alltrails.com/us/colorado/durango/mountain-biking" target="_blank" rel="noopener">AllTrails</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Local Info</h4>
+        <ul>
+          <li><a href="https://www.durango.org" target="_blank" rel="noopener">Visit Durango</a></li>
+          <li><a href="https://pedaldurango.com" target="_blank" rel="noopener">Pedal Durango</a></li>
+          <li><a href="https://www.colorado.com/articles/colorado-mountain-biking-heaven-dirt-durango" target="_blank" rel="noopener">Colorado.com Guide</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Built for riders, by riders. Trail data sourced from local knowledge and community resources. Always check current conditions before riding.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/trails.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+  <script src="js/map.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
